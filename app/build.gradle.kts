@@ -51,6 +51,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -71,6 +72,17 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:2.6.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
+
+    // Lifecycle
+    val lifecycle_version = "2.7.0"
+    val arch_version = "2.2.0"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version") // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version") // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version") // LiveData
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version") // Lifecycle utilities for Compose
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version") // Annotation processor
+    testImplementation("androidx.arch.core:core-testing:$arch_version") // optional - Test helpers for LiveData
+    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version") // optional - Test helpers for Lifecycle runtime
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

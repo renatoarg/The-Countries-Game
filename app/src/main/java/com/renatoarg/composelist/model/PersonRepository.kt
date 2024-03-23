@@ -44,7 +44,7 @@ class PersonRepository {
         }
     }
 
-    val getPersonList = personList
+    val getPersonList = personList.asReversed()
 
     fun addPerson(person: Person) {
        personList.add(person)
