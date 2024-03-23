@@ -33,13 +33,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    viewModel.addPerson(Person(name = "Reeeenato", age = 47, imageUrl = ""))
                     PersonsList(
-                        persons = viewModel.getPersonList,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        viewModel = viewModel
                     )
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPersonList()
     }
 }
