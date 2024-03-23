@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.renatoarg.composelist.model.PersonRepository
 import com.renatoarg.composelist.ui.theme.ComposeListTheme
+import com.renatoarg.composelist.view.PersonsList
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,25 +30,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Person's repository size: ${personRepo.getPersonList.size}")
+                    PersonsList(
+                        persons = personRepo.getPersonList,
+                        modifier = Modifier
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ComposeListTheme {
-        Greeting("Android")
     }
 }
