@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Compose List"
 include(":app")
+include(":data")

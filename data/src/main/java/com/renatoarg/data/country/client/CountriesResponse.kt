@@ -1,4 +1,4 @@
-package com.renatoarg.composelist.model
+package com.renatoarg.data.country.client
 
 import kotlinx.serialization.Serializable
 

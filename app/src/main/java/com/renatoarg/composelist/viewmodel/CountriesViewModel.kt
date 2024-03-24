@@ -2,9 +2,9 @@ package com.renatoarg.composelist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.renatoarg.composelist.model.ApiResult
-import com.renatoarg.composelist.model.ApiService
-import com.renatoarg.composelist.model.CountryItem
+import com.renatoarg.data.country.api.ApiResult
+import com.renatoarg.data.country.api.ApiService
+import com.renatoarg.data.country.client.CountryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +32,7 @@ class CountriesViewModel @Inject constructor(
             apiService.getCountries()
                 .flowOn(defaultDispatcher)
                 .catch {
-                    _countries.value=ApiResult.Error(it.message ?: "Something went wrong")
+                    _countries.value= ApiResult.Error(it.message ?: "Something went wrong")
                 }
                 .collect{
                     _countries.value=it

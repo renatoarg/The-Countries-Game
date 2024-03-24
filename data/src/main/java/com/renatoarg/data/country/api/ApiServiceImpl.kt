@@ -1,5 +1,7 @@
-package com.renatoarg.composelist.model
+package com.renatoarg.data.country.api
 
+
+import com.renatoarg.data.country.client.CountryItem
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

@@ -1,8 +1,7 @@
-package com.renatoarg.composelist._common.di
+package com.renatoarg.data.country.di
 
-import com.renatoarg.composelist.BuildConfig
-import com.renatoarg.composelist.model.ApiService
-import com.renatoarg.composelist.model.ApiServiceImpl
+import com.renatoarg.data.country.api.ApiService
+import com.renatoarg.data.country.api.ApiServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +13,6 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
-import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
