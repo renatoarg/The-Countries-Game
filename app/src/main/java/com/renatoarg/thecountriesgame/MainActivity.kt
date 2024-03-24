@@ -10,13 +10,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.renatoarg.thecountriesgame._common.theme.ComposeListTheme
 import com.renatoarg.thecountriesgame.view.CountriesList
-import com.renatoarg.thecountriesgame.viewmodel.CountriesViewModel
+import com.renatoarg.domain.viewmodel.CountriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: CountriesViewModel by viewModels()
+    private val viewModel: com.renatoarg.domain.viewmodel.CountriesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

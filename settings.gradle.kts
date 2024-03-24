@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "The Countries Game"
 include(":app")
 include(":data")
+include(":domain")

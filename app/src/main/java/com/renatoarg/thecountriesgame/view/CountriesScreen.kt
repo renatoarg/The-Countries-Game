@@ -31,55 +31,61 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-
-
-import com.renatoarg.data.country.api.ApiResult
-import com.renatoarg.data.country.client.CountryItem
 import com.renatoarg.thecontriesgame.R
-import com.renatoarg.thecountriesgame.viewmodel.CountriesViewModel
+import com.renatoarg.domain.viewmodel.CountriesViewModel
+import com.renatoarg.domain.viewmodel.CountryUi
 
 @Composable
 fun CountriesList(
     viewModel: CountriesViewModel,
     modifier: Modifier
 ) {
-    val apiResult by viewModel.countries.collectAsState()
+    val countriesUiState by viewModel.countries.collectAsState()
 
     Box(
         modifier = modifier
             .background(Color.Black.copy(.1f))
     ) {
-
-        when(apiResult) {
-            is ApiResult.Loading -> {
-                LoadingCircle(true)
+        if (countriesUiState.isLoading) {
+            LoadingCircle(true)
+        }
+        if (countriesUiState.countries.isEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = stringResource(id = R.string.empty_list))
             }
-            is ApiResult.Success -> {
-                LazyColumn(
-                    modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 16.dp),
-                ) {
-                    items(apiResult.data as List<CountryItem>) { country ->
-                        CountryListItem(
-                            country = country,
-                            modifier = modifier
-                        )
-                    }
-                }
-            }
-            is ApiResult.Error -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 16.dp, bottom = 16.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = apiResult.error.orEmpty())
+        }
+        if (countriesUiState.countries.isNotEmpty()) {
+            LazyColumn(
+                modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 16.dp),
+            ) {
+                items(countriesUiState.countries) { country ->
+                    CountryListItem(
+                        country = country,
+                        modifier = modifier
+                    )
                 }
             }
         }
+        if (countriesUiState.error != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = countriesUiState.error.orEmpty())
+            }
+        }
+
     }
 }
 
@@ -105,7 +111,7 @@ private fun LoadingCircle(
 
 @Composable
 private fun CountryListItem(
-    country: CountryItem,
+    country: CountryUi,
     modifier: Modifier
 ) {
     Card(
@@ -126,12 +132,12 @@ private fun CountryListItem(
                     .padding(8.dp),
             ) {
                 ImageFromURL(
-                    imageUrl = country.flags.png,
+                    imageUrl = country.imageUrl,
                     contentDescription = stringResource(id = R.string.cont_desc_country_flag)
                 )
             }
             Text(
-                    text = country.name.official,
+                    text = country.name,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                     maxLines = 1,
