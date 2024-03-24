@@ -1,7 +1,7 @@
 package com.renatoarg.data.country.api
 
 sealed class ApiResult<T>(val data:T?=null, val error:String?=null){
-    class Success<T>(quotes: T): ApiResult<T>(data = quotes)
+    class Success<T>(data: T): ApiResult<T>(data = data)
     class Error<T>(error: String): ApiResult<T>(error = error)
     class Loading<T>: ApiResult<T>()
 }

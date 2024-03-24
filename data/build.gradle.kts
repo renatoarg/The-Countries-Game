@@ -46,9 +46,12 @@ dependencies {
 
     // Ktor
     val ktorVersion = "2.3.2"
+    val loggingNative ="1.3.1"
     implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-android:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation ("io.ktor:ktor-client-logging-native:$loggingNative")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
@@ -58,6 +61,10 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson:gson:2.10")
+
+    // OkHttp
+    implementation("com.squareup.okhttp:okhttp:2.6.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

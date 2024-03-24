@@ -1,23 +1,25 @@
 package com.renatoarg.data.country.di
 
+import android.util.Log
 import com.renatoarg.data.country.api.ApiService
 import com.renatoarg.data.country.api.ApiServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.android.Android
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.request.header
-import io.ktor.http.HttpHeaders
+import io.ktor.client.plugins.logging.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
+import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 
@@ -28,9 +30,11 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideHttpClient():HttpClient{
-        val httpClient = HttpClient(Android){
+        val httpClient = HttpClient(CIO){
             install(Logging){
-                level=LogLevel.ALL
+                logger = CustomHttpLogger()
+                level = LogLevel.BODY
+                sanitizeHeader { header -> header == HttpHeaders.Authorization }
             }
             install(DefaultRequest){
                 url(Util.BASE_URL)
@@ -57,5 +61,11 @@ object ApiModule {
 
     object Util {
         const val BASE_URL="https://restcountries.com/v3.1/"
+    }
+}
+
+class CustomHttpLogger(): Logger {
+    override fun log(message: String) {
+        Log.d("applogger", message) // Or whatever logging system you want here
     }
 }
