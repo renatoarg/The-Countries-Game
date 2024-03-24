@@ -20,22 +20,22 @@ class CountriesViewModel @Inject constructor(
     private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _quotes= MutableStateFlow<ApiResult<List<CountryItem>>>(ApiResult.Loading())
-    val quotes= _quotes.asStateFlow()
+    private val _countries= MutableStateFlow<ApiResult<List<CountryItem>>>(ApiResult.Loading())
+    val countries= _countries.asStateFlow()
 
     init {
-        fetchQuotes()
+        fetchCountries()
     }
 
-    private fun fetchQuotes(){
+    private fun fetchCountries(){
         viewModelScope.launch {
             apiService.getCountries()
                 .flowOn(defaultDispatcher)
                 .catch {
-                    _quotes.value=ApiResult.Error(it.message ?: "Something went wrong")
+                    _countries.value=ApiResult.Error(it.message ?: "Something went wrong")
                 }
                 .collect{
-                    _quotes.value=it
+                    _countries.value=it
                 }
         }
     }

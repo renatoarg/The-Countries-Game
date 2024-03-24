@@ -1,7 +1,7 @@
 package com.renatoarg.composelist.view
 
-import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -44,7 +44,7 @@ fun CountriesList(
     viewModel: CountriesViewModel,
     modifier: Modifier
 ) {
-    val apiResult by viewModel.quotes.collectAsState()
+    val apiResult by viewModel.countries.collectAsState()
 
     Box(
         modifier = modifier
@@ -61,9 +61,9 @@ fun CountriesList(
                         .fillMaxWidth()
                         .padding(top = 16.dp, bottom = 16.dp),
                 ) {
-                    items(apiResult.data as List<CountryItem>) { person ->
+                    items(apiResult.data as List<CountryItem>) { country ->
                         PersonListItem(
-                            country = person,
+                            country = country,
                             modifier = modifier
                         )
                     }
@@ -71,9 +71,11 @@ fun CountriesList(
             }
             is ApiResult.Error -> {
                 Column(
-                    modifier
-                        .fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .padding(top = 16.dp, bottom = 16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = apiResult.error.orEmpty())
                 }
@@ -87,10 +89,19 @@ private fun LoadingCircle(
     isLoading: Boolean = false
 ) {
     if (isLoading.not()) return
-    CircularProgressIndicator(
-        modifier = Modifier.width(64.dp),
-        color = MaterialTheme.colorScheme.secondary
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.width(64.dp),
+            color = MaterialTheme.colorScheme.secondary,
+        )
+        Text(text = stringResource(id = R.string.loading))
+    }
 }
 
 @Composable
@@ -107,37 +118,28 @@ private fun PersonListItem(
     ) {
         Row(
             modifier = modifier
-                .height(IntrinsicSize.Min)
                 .background(Color.White),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = modifier
-                    .width(60.dp)
-                    .padding(4.dp),
+                    .width(100.dp)
+                    .padding(8.dp),
             ) {
                 ImageFromURL(
-                    imageUrl = "country.name",
-                    contentDescription = stringResource(id = R.string.cont_desc_celebrity_image)
+                    imageUrl = country.flags.png,
+                    contentDescription = stringResource(id = R.string.cont_desc_country_flag)
                 )
             }
-            Box (
-                modifier = modifier
-                    .fillMaxSize()
-                    .defaultMinSize(minHeight = 60.dp)
-                    .padding(4.dp)
-            ) {
-                Column {
-                    Text(
-                        text = country.name.official,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        maxLines = 1,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Text(text = "${country.population} years old")
-                }
-            }
+            Text(
+                    text = country.name.official,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    maxLines = 1,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+            )
         }
     }
 }
@@ -154,7 +156,7 @@ fun ImageFromURL(
             .build(),
         placeholder = painterResource(R.drawable.baseline_broken_image_24),
         contentDescription = contentDescription,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.FillWidth,
         modifier = Modifier.fillMaxSize()
     )
 }
