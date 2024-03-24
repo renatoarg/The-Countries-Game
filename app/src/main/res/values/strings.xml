@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Compose List</string>
+    <string name="app_name">The Countries Game</string>
     <string name="cont_desc_country_flag">Country flag</string>
     <string name="loading">Loading...</string>
 </resources>

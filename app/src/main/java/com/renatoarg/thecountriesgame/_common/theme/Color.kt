@@ -1,4 +1,4 @@
-package com.renatoarg.composelist._common.theme
+package com.renatoarg.thecountriesgame._common.theme
 
 import androidx.compose.ui.graphics.Color
 

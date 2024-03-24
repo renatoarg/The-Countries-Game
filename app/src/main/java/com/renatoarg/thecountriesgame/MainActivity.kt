@@ -1,4 +1,4 @@
-package com.renatoarg.composelist
+package com.renatoarg.thecountriesgame
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.renatoarg.composelist._common.theme.ComposeListTheme
-import com.renatoarg.composelist.view.CountriesList
-import com.renatoarg.composelist.viewmodel.CountriesViewModel
+import com.renatoarg.thecountriesgame._common.theme.ComposeListTheme
+import com.renatoarg.thecountriesgame.view.CountriesList
+import com.renatoarg.thecountriesgame.viewmodel.CountriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.renatoarg.composelist"
+    namespace = "com.renatoarg.thecontriesgame"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.renatoarg.composelist"
+        applicationId = "com.renatoarg.thecontriesgame"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

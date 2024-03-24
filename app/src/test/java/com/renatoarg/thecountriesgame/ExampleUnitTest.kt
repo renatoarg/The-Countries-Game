@@ -1,4 +1,4 @@
-package com.renatoarg.composelist
+package com.renatoarg.thecountriesgame
 
 import org.junit.Test
 

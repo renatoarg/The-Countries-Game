@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Compose List"
+rootProject.name = "The Countries Game"
 include(":app")
 include(":data")

@@ -1,4 +1,4 @@
-package com.renatoarg.composelist.view
+package com.renatoarg.thecountriesgame.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +31,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.renatoarg.composelist.R
+
+
 import com.renatoarg.data.country.api.ApiResult
 import com.renatoarg.data.country.client.CountryItem
-import com.renatoarg.composelist.viewmodel.CountriesViewModel
+import com.renatoarg.thecontriesgame.R
+import com.renatoarg.thecountriesgame.viewmodel.CountriesViewModel
 
 @Composable
 fun CountriesList(
@@ -59,7 +61,7 @@ fun CountriesList(
                         .padding(top = 16.dp, bottom = 16.dp),
                 ) {
                     items(apiResult.data as List<CountryItem>) { country ->
-                        PersonListItem(
+                        CountryListItem(
                             country = country,
                             modifier = modifier
                         )
@@ -102,7 +104,7 @@ private fun LoadingCircle(
 }
 
 @Composable
-private fun PersonListItem(
+private fun CountryListItem(
     country: CountryItem,
     modifier: Modifier
 ) {

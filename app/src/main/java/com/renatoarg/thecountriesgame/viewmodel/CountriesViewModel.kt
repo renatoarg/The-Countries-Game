@@ -1,4 +1,4 @@
-package com.renatoarg.composelist.viewmodel
+package com.renatoarg.thecountriesgame.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
