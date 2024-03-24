@@ -1,9 +1,13 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-
+    id ("org.jetbrains.kotlin.plugin.serialization")
+    id ("com.google.devtools.ksp")
     // Hilt
-    kotlin("kapt")
+    id ("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
 
@@ -22,6 +26,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val key: String = gradleLocalProperties(rootDir).getProperty("API_KEY")
+        buildConfigField("String","API_KEY", "\"$key\"")
     }
 
     buildTypes {
@@ -41,10 +48,11 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -58,7 +66,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("androidx.activity:activity-compose:1.5.2")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -66,8 +74,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     // Coil
     implementation("io.coil-kt:coil:2.6.0")
@@ -83,6 +91,27 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version") // Annotation processor
     testImplementation("androidx.arch.core:core-testing:$arch_version") // optional - Test helpers for LiveData
     testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version") // optional - Test helpers for Lifecycle runtime
+
+    // OkHttp
+    implementation("com.squareup.okhttp:okhttp:2.6.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    // retrofit
+    val retrofitVersion = "2.9.0"
+    implementation ("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+    implementation ("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Ktor
+    val ktorVersion = "2.3.2"
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

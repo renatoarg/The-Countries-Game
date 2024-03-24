@@ -1,4 +1,4 @@
-package com.renatoarg.composelist.ui.theme
+package com.renatoarg.composelist._common.theme
 
 import android.app.Activity
 import android.os.Build

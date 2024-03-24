@@ -1,8 +1,9 @@
 package com.renatoarg.composelist.viewmodel
 
-import com.renatoarg.composelist.model.Person
+
+import com.renatoarg.composelist.model.CountryItem
 
 data class PersonUiState(
-    val persons: List<Person> = emptyList(),
+    val countries: List<CountryItem> = emptyList(),
     val isLoading: Boolean = false
 )

@@ -17,8 +17,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,54 +31,71 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.renatoarg.composelist.R
-import com.renatoarg.composelist.model.Person
-import com.renatoarg.composelist.model.PersonRepository
-import com.renatoarg.composelist.viewmodel.PersonsViewModel
+import com.renatoarg.composelist.model.ApiResult
+import com.renatoarg.composelist.model.CountryItem
+import com.renatoarg.composelist.viewmodel.CountriesViewModel
 
 @Composable
-fun PersonsList(
-    viewModel: PersonsViewModel,
+fun CountriesList(
+    viewModel: CountriesViewModel,
     modifier: Modifier
 ) {
-    val personsList = viewModel.personUiState.persons
+    val apiResult by viewModel.quotes.collectAsState()
 
     Box(
         modifier = modifier
             .background(Color.Black.copy(.1f))
     ) {
-        LazyColumn(
-            modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp),
-        ) {
-            items(personsList) { person ->
-                PersonListItem(
-                    person = person,
-                    modifier = modifier
-                )
-            }
 
+        when(apiResult) {
+            is ApiResult.Loading -> {
+                LoadingCircle(true)
+            }
+            is ApiResult.Success -> {
+                LazyColumn(
+                    modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, bottom = 16.dp),
+                ) {
+                    items(apiResult.data as List<CountryItem>) { person ->
+                        PersonListItem(
+                            country = person,
+                            modifier = modifier
+                        )
+                    }
+                }
+            }
+            is ApiResult.Error -> {
+                Column(
+                    modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, bottom = 16.dp),
+                ) {
+                    Text(text = apiResult.error.orEmpty())
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun PreviewPersonsList() {
-    PersonsList(
-        modifier = Modifier,
-        viewModel = PersonsViewModel(PersonRepository())
+private fun LoadingCircle(
+    isLoading: Boolean = false
+) {
+    if (isLoading.not()) return
+    CircularProgressIndicator(
+        modifier = Modifier.width(64.dp),
+        color = MaterialTheme.colorScheme.secondary
     )
 }
 
 @Composable
 private fun PersonListItem(
-    person: Person,
+    country: CountryItem,
     modifier: Modifier
 ) {
     Card(
@@ -90,14 +111,13 @@ private fun PersonListItem(
                 .background(Color.White),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Log.d("RENATO", "url: ${person.imageUrl}")
             Box(
                 modifier = modifier
                     .width(60.dp)
                     .padding(4.dp),
             ) {
                 ImageFromURL(
-                    imageUrl = person.imageUrl,
+                    imageUrl = "country.name",
                     contentDescription = stringResource(id = R.string.cont_desc_celebrity_image)
                 )
             }
@@ -109,13 +129,13 @@ private fun PersonListItem(
             ) {
                 Column {
                     Text(
-                        text = person.name,
+                        text = country.name.official,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
                         maxLines = 1,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Text(text = "${person.age} years old")
+                    Text(text = "${country.population} years old")
                 }
             }
         }
