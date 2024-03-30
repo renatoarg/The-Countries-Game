@@ -19,7 +19,6 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
-import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 

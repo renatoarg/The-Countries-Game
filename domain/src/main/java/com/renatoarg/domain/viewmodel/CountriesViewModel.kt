@@ -21,7 +21,7 @@ class CountriesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _countries = MutableStateFlow(CountriesUiState(countries = emptyList(), isLoading = true))
-    val countries = _countries.asStateFlow()
+    val countries = _countries
 
     init {
         fetchCountries()

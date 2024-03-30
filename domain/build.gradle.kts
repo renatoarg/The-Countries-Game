@@ -36,26 +36,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
+    // data module
+    data()
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
-
-    // Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
-
-    // Lifecycle
-    val lifecycle_version = "2.7.0"
-    val arch_version = "2.2.0"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version") // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version") // ViewModel utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version") // LiveData
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version") // Lifecycle utilities for Compose
-    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version") // Annotation processor
-    testImplementation("androidx.arch.core:core-testing:$arch_version") // optional - Test helpers for LiveData
-    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version") // optional - Test helpers for Lifecycle runtime
+    // dependencies
+    coreKtx()
+    hilt()
+    lifecycle()
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
